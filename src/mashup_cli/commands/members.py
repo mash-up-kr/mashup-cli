@@ -57,6 +57,50 @@ def get_member(
     print_dict(member)
 
 
+@app.command("search")
+def search_members(
+    name: str = typer.Option(..., "--name", help="검색할 이름 (부분 일치)"),
+    generation: Optional[int] = typer.Option(None, help="기수 (생략 시 현재 기수)"),
+):
+    """이름으로 멤버를 검색합니다."""
+    client = MashupClient()
+
+    if generation is None:
+        try:
+            gens = client.get("/api/v1/generations")
+            gens = gens if isinstance(gens, list) else gens.get("data", gens)
+            from datetime import date
+            today = date.today().isoformat()
+            current = next(
+                (g for g in gens if g.get("startedAt", "") <= today <= g.get("endedAt", "")),
+                None,
+            )
+            if current is None:
+                error("현재 활성화된 기수를 찾을 수 없습니다. --generation 옵션으로 기수를 지정하세요.")
+            generation = current["number"]
+        except APIError as e:
+            error(str(e))
+
+    try:
+        data = client.get(f"/api/v1/members/{generation}")
+    except APIError as e:
+        error(str(e))
+
+    members = data if isinstance(data, list) else data.get("data", data)
+    matched = [m for m in members if name in m.get("name", "")]
+
+    if not matched:
+        typer.echo(f"'{name}'과(와) 일치하는 멤버가 없습니다.")
+        raise SystemExit(0)
+
+    if is_json_mode():
+        print_json(matched)
+        return
+
+    rows = [[m.get("id"), m.get("name"), m.get("platform"), m.get("status")] for m in matched]
+    print_table(["ID", "이름", "플랫폼", "상태"], rows, footer=f"Total: {len(rows)} members")
+
+
 @app.command("reset-password")
 def reset_password(
     member_id: int = typer.Argument(..., help="멤버 ID"),

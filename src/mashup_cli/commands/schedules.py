@@ -58,6 +58,54 @@ def get_schedule(
     print_dict(schedule)
 
 
+@app.command("next")
+def next_schedule(
+    generation: Optional[int] = typer.Option(None, help="기수 (생략 시 현재 기수)"),
+):
+    """가장 가까운 다음 일정을 조회합니다."""
+    client = MashupClient()
+
+    if generation is None:
+        try:
+            gens = client.get("/api/v1/generations")
+            gens = gens if isinstance(gens, list) else gens.get("data", gens)
+            from datetime import date
+            today = date.today().isoformat()
+            current = next(
+                (g for g in gens if g.get("startedAt", "") <= today <= g.get("endedAt", "")),
+                None,
+            )
+            if current is None:
+                error("현재 활성화된 기수를 찾을 수 없습니다. --generation 옵션으로 기수를 지정하세요.")
+            generation = current["number"]
+        except APIError as e:
+            error(str(e))
+
+    try:
+        data = client.get("/api/v1/schedules", params={"generationNumber": generation})
+    except APIError as e:
+        error(str(e))
+
+    schedules = data if isinstance(data, list) else data.get("data", data)
+
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc).isoformat()
+    upcoming = [s for s in schedules if (s.get("startedAt") or "") > now]
+    upcoming.sort(key=lambda s: s.get("startedAt", ""))
+
+    if not upcoming:
+        typer.echo("예정된 일정이 없습니다.")
+        raise SystemExit(0)
+
+    nxt = upcoming[0]
+
+    if is_json_mode():
+        print_json(nxt)
+        return
+
+    print_dict(nxt)
+
+
 @app.command("publish")
 def publish_schedule(
     schedule_id: int = typer.Argument(..., help="일정 ID"),
