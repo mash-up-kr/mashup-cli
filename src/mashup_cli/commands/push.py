@@ -10,7 +10,7 @@ from ..output import error, is_json_mode, print_json
 app = typer.Typer(help="푸시 알림")
 
 
-@app.command("broadcast")
+@app.command("broadcast", hidden=True)
 def broadcast(
     title: str = typer.Option(..., help="알림 제목"),
     body: str = typer.Option(..., help="알림 내용"),

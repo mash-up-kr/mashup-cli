@@ -27,7 +27,7 @@ def list_generations():
     print_table(["ID", "기수", "시작일", "종료일"], rows)
 
 
-@app.command("create")
+@app.command("create", hidden=True)
 def create_generation(
     number: int = typer.Option(..., help="기수 번호"),
     started_at: str = typer.Option(..., help="시작일 (YYYY-MM-DD)"),

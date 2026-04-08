@@ -75,7 +75,7 @@ def reset_password(
     typer.echo("비밀번호가 초기화되었습니다.")
 
 
-@app.command("status")
+@app.command("status", hidden=True)
 def update_status(
     generation: int = typer.Argument(..., help="기수"),
     status: str = typer.Option(..., help="변경할 상태 (ACTIVE, INACTIVE, DROP_OUT)"),
@@ -99,7 +99,7 @@ def update_status(
     typer.echo(f"상태가 {status}로 변경되었습니다.")
 
 
-@app.command("transfer")
+@app.command("transfer", hidden=True)
 def transfer(
     from_gen: int = typer.Option(..., "--from", help="원본 기수"),
     to_gen: int = typer.Option(..., "--to", help="대상 기수"),

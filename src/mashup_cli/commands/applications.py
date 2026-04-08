@@ -8,7 +8,7 @@ from ..output import error, is_json_mode, print_dict, print_json, print_table
 app = typer.Typer(help="지원서 관리")
 
 
-@app.command("list")
+@app.command("list", hidden=True)
 def list_applications(
     generation: int = typer.Argument(..., help="기수"),
 ):
@@ -32,7 +32,7 @@ def list_applications(
     print_table(["ID", "이름", "플랫폼", "결과"], rows)
 
 
-@app.command("get")
+@app.command("get", hidden=True)
 def get_application(
     application_id: int = typer.Argument(..., help="지원서 ID"),
 ):
@@ -52,7 +52,7 @@ def get_application(
     print_dict(application)
 
 
-@app.command("update-result")
+@app.command("update-result", hidden=True)
 def update_result(
     application_id: int = typer.Argument(..., help="지원서 ID"),
     result: str = typer.Option(..., help="결과 (PASS, FAIL)"),
@@ -74,7 +74,7 @@ def update_result(
     typer.echo(f"결과가 {result}로 변경되었습니다.")
 
 
-@app.command("csv")
+@app.command("csv", hidden=True)
 def download_csv(
     generation: int = typer.Argument(..., help="기수"),
     output_file: str = typer.Option("applications.csv", "--output", "-o", help="저장할 파일명"),

@@ -84,7 +84,7 @@ def hide_schedule(
     typer.echo("일정이 숨겨졌습니다.")
 
 
-@app.command("qr")
+@app.command("qr", hidden=True)
 def set_qr(
     schedule_id: int = typer.Argument(..., help="일정 ID"),
     event_id: int = typer.Argument(..., help="이벤트 ID"),

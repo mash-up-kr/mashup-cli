@@ -70,7 +70,7 @@ mashup members list <기수>                     # 기수별 멤버 목록
 mashup members get <기수> <멤버ID>             # 멤버 상세
 mashup members reset-password <멤버ID>         # 비밀번호 초기화
 # [비활성화] mashup members status <기수> --status ACTIVE   # 멤버 상태 변경
-mashup members transfer --from 13 --to 14      # 기수 이동
+# [비활성화] mashup members transfer --from 13 --to 14      # 기수 이동
 ```
 
 ### 6.3 기수/팀
@@ -90,7 +90,7 @@ mashup schedules get <일정ID>                   # 일정 상세
 mashup schedules create                         # 일정 생성 (인터랙티브)
 mashup schedules publish <일정ID>               # 일정 공개
 mashup schedules hide <일정ID>                  # 일정 숨김
-mashup schedules qr <일정ID> <이벤트ID>         # QR 출석 시간 설정
+# [비활성화] mashup schedules qr <일정ID> <이벤트ID>         # QR 출석 시간 설정
 
 mashup attendance list <일정ID>                 # 일정별 출석 현황 (플랫폼별)
 mashup attendance get <일정ID> <멤버ID>         # 멤버별 출석 상태
@@ -116,7 +116,7 @@ mashup forms create                             # 설문지 생성
 ### 6.6 알림
 
 ```bash
-mashup push broadcast --title "제목" --body "내용"              # 전체 푸시
+# [비활성화] mashup push broadcast --title "제목" --body "내용"              # 전체 푸시
 mashup push narrowcast --members 1,2,3 --title "제목" --body "내용"  # 선택 푸시
 mashup email send                                               # 이메일 발송
 mashup email list                                               # 발송 이력
