@@ -68,6 +68,7 @@ mashup logout                     # 토큰 삭제
 ```bash
 mashup members list <기수>                     # 기수별 멤버 목록
 mashup members get <기수> <멤버ID>             # 멤버 상세
+mashup members search --name "홍길동"          # 이름으로 멤버 검색 (기수 생략 시 현재 기수)
 mashup members reset-password <멤버ID>         # 비밀번호 초기화
 # [비활성화] mashup members status <기수> --status ACTIVE   # 멤버 상태 변경
 # [비활성화] mashup members transfer --from 13 --to 14      # 기수 이동
@@ -77,6 +78,7 @@ mashup members reset-password <멤버ID>         # 비밀번호 초기화
 
 ```bash
 mashup generations list              # 기수 목록
+mashup generations current           # 현재 활성 기수 조회
 # [비활성화] mashup generations create            # 기수 생성
 mashup teams list <기수>             # 팀 목록
 mashup teams create <기수>           # 팀 생성
@@ -87,6 +89,7 @@ mashup teams create <기수>           # 팀 생성
 ```bash
 mashup schedules list <기수>                    # 일정 목록
 mashup schedules get <일정ID>                   # 일정 상세
+mashup schedules next                           # 다음 일정 조회 (기수 생략 시 현재 기수)
 mashup schedules create                         # 일정 생성 (인터랙티브)
 mashup schedules publish <일정ID>               # 일정 공개
 mashup schedules hide <일정ID>                  # 일정 숨김
