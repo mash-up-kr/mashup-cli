@@ -14,10 +14,11 @@ app = typer.Typer(help="멤버 관리")
 def list_members(
     generation: int = typer.Argument(..., help="기수"),
     platform: Optional[str] = typer.Option(None, help="플랫폼 필터 (예: SPRING, iOS, WEB, ANDROID, NODE)"),
+    size: int = typer.Option(100, "--size", help="한 번에 가져올 최대 인원 (기본 100, 한 기수는 보통 60명 내외)"),
 ):
     """기수별 멤버 목록을 조회합니다."""
     client = MashupClient()
-    params = {"generationNumber": generation}
+    params: dict = {"generationNumber": generation, "size": size}
     if platform:
         params["platform"] = platform
     try:

@@ -3,7 +3,7 @@ from __future__ import annotations
 import typer
 
 from ..client import APIError, MashupClient
-from ..output import error, is_json_mode, print_json, print_table
+from ..output import error, is_json_mode, print_dict, print_json, print_table
 
 app = typer.Typer(help="KV 저장소")
 
@@ -27,7 +27,12 @@ def get_value(
         print_json(value)
         return
 
-    typer.echo(f"{key} = {value}")
+    # valueMap은 보통 nested dict라 print_dict 규칙(중첩은 --json 힌트)을 재사용.
+    if isinstance(value, dict):
+        typer.echo(f"{key}:")
+        print_dict(value)
+    else:
+        typer.echo(f"{key} = {value}")
 
 
 @app.command("set")
