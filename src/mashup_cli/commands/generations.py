@@ -23,7 +23,10 @@ def list_generations():
         print_json(generations)
         return
 
-    rows = [[g.get("id"), g.get("number"), g.get("startedAt"), g.get("endedAt")] for g in generations]
+    rows = [
+        [g.get("generationId"), g.get("generationNumber"), g.get("startedAt"), g.get("endedAt")]
+        for g in generations
+    ]
     print_table(["ID", "기수", "시작일", "종료일"], rows)
 
 

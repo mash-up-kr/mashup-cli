@@ -26,7 +26,12 @@ def list_applications(
         return
 
     rows = [
-        [a.get("id"), a.get("name"), a.get("platform"), a.get("result")]
+        [
+            a.get("applicationId"),
+            (a.get("applicant") or {}).get("name"),
+            (a.get("team") or {}).get("name"),
+            (a.get("result") or {}).get("status"),
+        ]
         for a in applications
     ]
     print_table(["ID", "이름", "플랫폼", "결과"], rows)

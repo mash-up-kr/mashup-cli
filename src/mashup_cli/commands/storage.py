@@ -19,11 +19,14 @@ def get_value(
     except APIError as e:
         error(str(e))
 
+    # 응답 스키마: {"code": "SUCCESS", "data": {"keyString": "...", "valueMap": {...}}}
+    payload = data.get("data", data) if isinstance(data, dict) else data
+    value = payload.get("valueMap", payload) if isinstance(payload, dict) else payload
+
     if is_json_mode():
-        print_json(data)
+        print_json(value)
         return
 
-    value = data.get("value", data) if isinstance(data, dict) else data
     typer.echo(f"{key} = {value}")
 
 
@@ -55,11 +58,24 @@ def list_keys():
     except APIError as e:
         error(str(e))
 
-    keys = data if isinstance(data, list) else data.get("data", data)
+    # 실제 응답 스키마: {"code": "SUCCESS", "data": {"keyStrings": [...]}}.
+    # envelope를 한 단계 벗긴 뒤 keyStrings를 꺼낸다.
+    # 과거 포맷(list 자체 / {"data": [...]})도 방어적으로 처리.
+    payload = data.get("data", data) if isinstance(data, dict) else data
+    if isinstance(payload, list):
+        keys = payload
+    elif isinstance(payload, dict):
+        keys = payload.get("keyStrings") or []
+    else:
+        keys = []
 
     if is_json_mode():
         print_json(keys)
         return
 
-    rows = [[k] for k in keys] if keys and isinstance(keys[0], str) else [[k.get("key")] for k in keys]
-    print_table(["키"], rows)
+    rows = (
+        [[k] for k in keys]
+        if keys and isinstance(keys[0], str)
+        else [[k.get("key")] for k in keys]
+    )
+    print_table(["키"], rows, footer=f"Total: {len(rows)} keys")

@@ -31,7 +31,10 @@ def list_members(
         print_json(members)
         return
 
-    rows = [[m.get("id"), m.get("name"), m.get("platform"), m.get("status")] for m in members]
+    rows = [
+        [m.get("memberId"), m.get("name"), m.get("platform"), m.get("memberStatus")]
+        for m in members
+    ]
     print_table(["ID", "이름", "플랫폼", "상태"], rows, footer=f"Total: {len(rows)} members")
 
 

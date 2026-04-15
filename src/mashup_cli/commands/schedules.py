@@ -32,7 +32,7 @@ def list_schedules(
         return
 
     rows = [
-        [s.get("id"), s.get("name"), s.get("startedAt"), s.get("endedAt"), s.get("status")]
+        [s.get("scheduleId"), s.get("name"), s.get("startedAt"), s.get("endedAt"), s.get("status")]
         for s in schedules
     ]
     print_table(["ID", "이름", "시작", "종료", "상태"], rows)

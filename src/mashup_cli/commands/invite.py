@@ -25,7 +25,10 @@ def list_invite_codes(
         print_json(codes)
         return
 
-    rows = [[c.get("id"), c.get("code"), c.get("platform"), c.get("expiresAt")] for c in codes]
+    rows = [
+        [c.get("inviteCodeId"), c.get("inviteCode"), c.get("platform"), c.get("validEndedAt")]
+        for c in codes
+    ]
     print_table(["ID", "코드", "플랫폼", "만료일"], rows)
 
 
