@@ -35,7 +35,7 @@ def global_options(
 
 @app.command()
 def login(
-    url: str = typer.Option("https://admin-api.mashup.kr", "--url", help="API 서버 URL"),
+    url: str = typer.Option("https://api.adminsoo.mash-up.kr", "--url", help="API 서버 URL"),
 ):
     """Admin 로그인 후 JWT를 저장합니다."""
     auth.login(url)

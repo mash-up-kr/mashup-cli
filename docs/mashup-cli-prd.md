@@ -36,7 +36,7 @@ Mash-Up Admin API를 래핑하는 Python CLI를 만들어,
 
 ```bash
 # 초기 설정
-mashup login --url https://admin-api.mashup.kr
+mashup login --url https://api.adminsoo.mash-up.kr
 # → username/password 입력 → JWT 발급 → ~/.mashup/config.json 저장
 
 # 이후 자동으로 저장된 토큰 사용
@@ -46,7 +46,7 @@ mashup members list 14
 `~/.mashup/config.json`:
 ```json
 {
-  "api_url": "https://admin-api.mashup.kr",
+  "api_url": "https://api.adminsoo.mash-up.kr",
   "token": "eyJhbGciOiJ..."
 }
 ```

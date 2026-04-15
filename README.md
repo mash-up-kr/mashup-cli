@@ -13,7 +13,7 @@ pipx install mashup-cli
 
 ```bash
 # 로그인
-mashup login --url https://admin-api.mashup.kr
+mashup login --url https://api.adminsoo.mash-up.kr
 
 # 멤버 목록 조회
 mashup members list 14
@@ -43,7 +43,7 @@ mashup --json members list 14
 
 ```json
 {
-  "api_url": "https://admin-api.mashup.kr",
+  "api_url": "https://api.adminsoo.mash-up.kr",
   "token": "eyJhbGciOiJ..."
 }
 ```
